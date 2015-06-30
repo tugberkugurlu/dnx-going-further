@@ -17,7 +17,7 @@ public class AnalyzersCompileModule : ICompileModule
 
     public void BeforeCompile(IBeforeCompileContext context)
     {
-        string analyzerAssemblyPath = Path.Combine(_basePath, @"lib/DotNetDoodle.Analyzers.dll");
+        string analyzerAssemblyPath = Path.Combine(_basePath, @"../../lib/DotNetDoodle.Analyzers.dll");
         ImmutableArray<DiagnosticAnalyzer> diagnosticAnalyzers = new AnalyzerFileReference(analyzerAssemblyPath).GetAnalyzers(LanguageNames.CSharp);
         var compilation = context.Compilation.WithAnalyzers(diagnosticAnalyzers);
         ImmutableArray<Diagnostic> diagsnostics = compilation.GetAnalyzerDiagnosticsAsync().Result;
