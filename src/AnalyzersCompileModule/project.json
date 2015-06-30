@@ -1,0 +1,15 @@
+{
+    "name": "AnalyzersCompileModule",
+    "version": "0.0.1",
+    "dependencies": {
+        "Microsoft.Framework.Runtime.Roslyn.Interfaces": "1.0.0-beta4"
+    },
+    "frameworks": {
+        "dnx451": {
+            "frameworkAssemblies": {
+                "System.Runtime": "4.0.10.0",
+                "System.Threading.Tasks": "4.0.0.0"
+            }
+        }
+    }
+}
