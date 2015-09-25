@@ -6,27 +6,27 @@
     "projectUrl": "",
     "licenseUrl": "",    
 
-    "preprocess": [
-        "../AnalyzersCompileModule/compiler/preprocess/*.cs"
-    ],
+    "preprocess": "../AnalyzersCompileModule/compiler/preprocess/*.cs",
 
     "dependencies": {
-        "Microsoft.Framework.Runtime.Roslyn.Interfaces": "1.0.0-beta4"
+        "Microsoft.Dnx.Compilation.CSharp.Abstractions": "1.0.0-beta8-15618"
     },
 
     "frameworks": {
         "dnx451": {
             "frameworkAssemblies": {
                 "System.Runtime": "4.0.10.0",
-                "System.Threading.Tasks": "4.0.0.0"
+                "System.Threading.Tasks": "4.0.0.0",
+                "System.Reflection": "4.0.0.0"
             }
         },
         "dnxcore50": {
             "dependencies": {
-                "System.Collections": "4.0.10-beta-22816",
-                "System.Linq": "4.0.0-beta-22816",
-                "System.Threading": "4.0.10-beta-22816",
-                "Microsoft.CSharp": "4.0.0-beta-22816"
+                "System.Collections": "4.0.11-beta-23225",
+                "System.Linq": "4.0.1-beta-23225",
+                "System.Threading": "4.0.1-beta-23225",
+                "Microsoft.CSharp": "4.0.1-beta-23225",
+                "System.Reflection": "4.1.0-beta-23225"
             }
         }
     }

@@ -1,24 +1,24 @@
+using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
 using System.IO;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
+using System.Reflection;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.Framework.Runtime;
-using Microsoft.Framework.Runtime.Roslyn;
+using Microsoft.Dnx.Compilation.CSharp;
+using Microsoft.Dnx.Runtime;
 
-public class AnalyzersCompileModule : ICompileModule
+public class AnalyzersCompilationModule : ICompileModule
 {
     private readonly string _basePath;
 
-    public AnalyzersCompileModule(IApplicationEnvironment appEnv)
+    public AnalyzersCompilationModule(IApplicationEnvironment appEnv)
     {
         _basePath = appEnv.ApplicationBasePath;
     }
 
-    public void BeforeCompile(IBeforeCompileContext context)
+    public void BeforeCompile(BeforeCompileContext context)
     {
-        string analyzerAssemblyPath = Path.Combine(_basePath, @"../../lib/DotNetDoodle.Analyzers.dll");
-        ImmutableArray<DiagnosticAnalyzer> diagnosticAnalyzers = new AnalyzerFileReference(analyzerAssemblyPath).GetAnalyzers(LanguageNames.CSharp);
+        string analyzerAssemblyPath = Path.Combine(context.ProjectContext.ProjectDirectory, @"../../lib/DotNetDoodle.Analyzers.dll");
+        ImmutableArray<DiagnosticAnalyzer> diagnosticAnalyzers = new AnalyzerFileReference(analyzerAssemblyPath, FromFileLoader.Instance).GetAnalyzers(LanguageNames.CSharp);
         var compilation = context.Compilation.WithAnalyzers(diagnosticAnalyzers);
         ImmutableArray<Diagnostic> diagsnostics = compilation.GetAnalyzerDiagnosticsAsync().Result;
 
@@ -28,7 +28,21 @@ public class AnalyzersCompileModule : ICompileModule
         }
     }
 
-    public void AfterCompile(IAfterCompileContext context)
+    public void AfterCompile(AfterCompileContext context)
     {
+    }
+    
+    private class FromFileLoader : IAnalyzerAssemblyLoader
+    {
+        public static FromFileLoader Instance = new FromFileLoader();
+
+        public void AddDependencyLocation(string fullPath)
+        {
+        }
+
+        public Assembly LoadFromPath(string fullPath)
+        {
+            return Assembly.LoadFrom(fullPath);
+        }
     }
 }
