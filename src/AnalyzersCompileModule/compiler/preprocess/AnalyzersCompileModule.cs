@@ -8,13 +8,6 @@ using Microsoft.Dnx.Runtime;
 
 public class AnalyzersCompilationModule : ICompileModule
 {
-    private readonly string _basePath;
-
-    public AnalyzersCompilationModule(IApplicationEnvironment appEnv)
-    {
-        _basePath = appEnv.ApplicationBasePath;
-    }
-
     public void BeforeCompile(BeforeCompileContext context)
     {
         string analyzerAssemblyPath = Path.Combine(context.ProjectContext.ProjectDirectory, @"../../lib/DotNetDoodle.Analyzers.dll");
